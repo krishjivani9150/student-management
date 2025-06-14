@@ -6,11 +6,15 @@ from sqlalchemy import create_engine, Column, Integer, String, Text, Float, JSON
 from sqlalchemy.orm import declarative_base, sessionmaker
 from dotenv import load_dotenv
 import json,os
-
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI()
 
+templates = Jinja2Templates(directory="templates")
 
 # CORS (frontend to backend access)
 app.add_middleware(
@@ -120,6 +124,15 @@ def insert_student(student: StudentIn):
         db.close()
 
 
+
+@app.get("/", response_class=HTMLResponse)
+def serve_home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+
 # 🔹 View All
 @app.get("/view/", response_model=List[StudentOut])
 def view_all():
@@ -192,5 +205,10 @@ def filter_students(course: Optional[str] = None, gender: Optional[str] = None):
         return query.order_by(Student.course, Student.roll_number).all()
     finally:
         db.close()
+
+
+
+
+
 
 

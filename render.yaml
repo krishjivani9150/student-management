@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: student-management-api
+    runtime: python
+    buildCommand: ""
+    startCommand: uvicorn main1:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+    plan: free
+    autoDeploy: true
