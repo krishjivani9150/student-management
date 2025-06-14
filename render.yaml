@@ -1,17 +1,17 @@
 services:
   - type: web
-    name: student-management-api
-    runtime: python
-    buildCommand: ""
-    startCommand: uvicorn main1:app --host 0.0.0.0 --port 10000
+    name: student-management-system
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main1:app --host 0.0.0.0 --port 10000"
     envVars:
-      - key: DB_HOST
-        sync: false
       - key: DB_USER
-        sync: false
+        value: root
       - key: DB_PASSWORD
-        sync: false
+        value: DuUTuXUDzJOFiknGFJNdZwEhfAWGGEsW
+      - key: DB_HOST
+        value: switchback.proxy.rlwy.net
+      - key: DB_PORT
+        value: 41538
       - key: DB_NAME
-        sync: false
-    plan: free
-    autoDeploy: true
+        value: railway
