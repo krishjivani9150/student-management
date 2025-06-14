@@ -194,29 +194,3 @@ def filter_students(course: Optional[str] = None, gender: Optional[str] = None):
         db.close()
 
 
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
-from fastapi import Request
-from fastapi.staticfiles import StaticFiles
-
-templates = Jinja2Templates(directory="templates")
-
-@app.get("/", response_class=HTMLResponse)
-def serve_home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
-
-# Hosting notes:
-# ----------------
-# To deploy this on Replit or Render:
-# 1. Add `requirements.txt` file:
-#    fastapi
-#    uvicorn
-#    sqlalchemy
-#    pymysql
-#    python-dotenv
-# 2. On Replit: add `.replit` with:
-#    run = "uvicorn main:app --host=0.0.0.0 --port=8000"
-# 3. OR On Render: connect GitHub repo and set start command same as above.
